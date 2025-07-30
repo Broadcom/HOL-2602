@@ -244,7 +244,6 @@ src="/vpodrepo/2026-labs/2601/labfiles"
 dst="/home/holuser/"
 pwd = lsf.password
 
-
 if lsf.LMC:
     
     lsf.write_output(f"TASK: Removing existing labfiles folder...", logfile=lsf.logfile)
@@ -263,9 +262,19 @@ if lsf.LMC:
         lsf.write_output(f'INFO: {e}', logfile=lsf.logfile)
         print(f'INFO: {e}')
 
+########################################################
+#  260x - Shutdown Docker Services
+########################################################
+if lsf.LMC: 
+    if not lsf.labcheck:
+        lsf.write_output(f"TASK: Shutting Down Docker Containers", logfile=lsf.logfile)
+        try:
+            lsf.ssh(f'docker compose -f /opt/services.yaml down', 'holuser@docker', pwd)
+        except Exception as e:
+            lsf.write_output(f'INFO: {e}', logfile=lsf.logfile)
+            print(f'INFO: {e}')
+
+
+
 lsf.write_output(f'{sys.argv[0]} finished.', logfile=lsf.logfile) 
 exit(0)
-
-########################################################
-#  2501 - Restart DOcker Services
-########################################################
