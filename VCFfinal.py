@@ -131,20 +131,23 @@ if 'vravms' in lsf.config['VCFFINAL'].keys():
                 verify_nic_connected (vm, False) # if not connected, disconnect and reconnect
 
 
-
 ########################################################
 #  26xx - Restart Docker Services
 ########################################################
 pwd = lsf.password
 
+services = ["gitlab","poste.io","ldap", "registry", "flask"]
+
 if lsf.LMC: 
     if not lsf.labcheck:
-        lsf.write_output(f"TASK: Recreating Docker Containers", logfile=lsf.logfile)
-        try:
-            lsf.ssh(f'docker compose -f /opt/services.yaml up -d --build --force-recreate --wait', 'holuser@docker', pwd)
-        except Exception as e:
-            lsf.write_output(f'INFO: {e}', logfile=lsf.logfile)
-            print(f'INFO: {e}')
+        for service in services:
+            lsf.write_output(f"TASK: Restarting Docker Container - {service}", logfile=lsf.logfile)
+            try:
+                lsf.ssh(f'docker restart {service}', 'holuser@docker', pwd)
+
+            except Exception as e:
+                lsf.write_output(f'INFO: {e}', logfile=lsf.logfile)
+                print(f'INFO: {e}')
 
 ########################################################
 #  26xx - Check Gitlab Status
