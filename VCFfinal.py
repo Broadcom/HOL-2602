@@ -134,26 +134,27 @@ if 'vravms' in lsf.config['VCFFINAL'].keys():
 ########################################################
 #  26xx - Restart Docker Services
 ########################################################
-pwd = lsf.password
+# pwd = lsf.password
 
-services = ["gitlab","poste.io","ldap", "registry", "flask"]
+# services = ["gitlab","poste.io","ldap", "registry", "flask"]
 
-if lsf.LMC: 
-    if not lsf.labcheck:
-        for service in services:
-            lsf.write_output(f"TASK: Restarting Docker Container - {service}", logfile=lsf.logfile)
-            try:
-                lsf.ssh(f'docker restart {service}', 'holuser@docker', pwd)
+# if lsf.LMC: 
+#     if not lsf.labcheck:
+#         for service in services:
+#             lsf.write_output(f"TASK: Restarting Docker Container - {service}", logfile=lsf.logfile)
+#             try:
+#                 lsf.ssh(f'docker restart {service}', 'holuser@docker', pwd)
 
-            except Exception as e:
-                lsf.write_output(f'INFO: {e}', logfile=lsf.logfile)
-                print(f'INFO: {e}')
+#             except Exception as e:
+#                 lsf.write_output(f'INFO: {e}', logfile=lsf.logfile)
+#                 print(f'INFO: {e}')
 
 ########################################################
 #  26xx - Check Gitlab Status
 ########################################################
 # gitFqdn = "gitlab.site-a.vcf.lab"
 # sslVerify = False
+# pwd = lsf.password
 
 # if lsf.LMC:
 #     lsf.write_output(f"TASK: Checking Gitlab Status...", logfile=lsf.logfile)
