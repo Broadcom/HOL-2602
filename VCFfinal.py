@@ -136,12 +136,13 @@ if 'vravms' in lsf.config['VCFFINAL'].keys():
 ########################################################
 pwd = lsf.password
 
-services = ["gitlab","poste.io","ldap", "registry", "flask"]
+services = ["gitlab","poste.io","ldap", "registry", "flask", "repo"]
 
 if lsf.LMC: 
     if not lsf.labcheck:
         for service in services:
             lsf.write_output(f"TASK: Restarting Docker Container - {service}", logfile=lsf.logfile)
+            lsf.write_vpodprogress(f'Restarting Docker Container - {service}', 'GOOD-8', color=color)
             try:
                 lsf.ssh(f'docker restart {service}', 'holuser@docker', pwd)
 
@@ -158,6 +159,7 @@ pwd = lsf.password
 
 if lsf.LMC:
     lsf.write_output(f"TASK: Checking Gitlab Status...", logfile=lsf.logfile)
+    lsf.write_vpodprogress(f'Checking Gitlab Status...', 'GOOD-8', color=color)
     while True:
         if hol.isGitlabReady(gitFqdn, sslVerify) and hol.isGitlabLive(gitFqdn, sslVerify) and hol.isGitlabHealthy(gitFqdn, sslVerify):
             lsf.write_output(f'INFO: Gitlab {gitFqdn} is in a Ready state!', logfile=lsf.logfile)
