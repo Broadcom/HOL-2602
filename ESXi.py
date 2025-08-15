@@ -71,8 +71,10 @@ if lsf.LMC:
                     username = 'root'
                     password = pwd
                     if hol.isReachable(host, port=22):
+                        lsf.write_output(f"TASK: Running esxcli command on '{host}'", logfile=lsf.logfile)
                         lsf.ssh(f'esxcli system settings advanced set -o /Mem/AllocGuestLargePage -i 1', f'{username}@{host}', pwd)
-                        lsf.write_output(f"{lsf.ssh(f'esxcli system settings advanced list -o /Mem/AllocGuestLargePage', f'{username}@{host}', pwd)}")
+                        result = lsf.ssh(f'esxcli system settings advanced list -o /Mem/AllocGuestLargePage', f'{username}@{host}', pwd)
+                        lsf.write_output(f"{result}")
                     else:
                         lsf.write_output(f"INFO: {host} not reachable...", logfile=lsf.logfile)
         except Exception as e:
