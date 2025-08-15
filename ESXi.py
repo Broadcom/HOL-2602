@@ -69,7 +69,7 @@ if lsf.LMC:
                 for host in esx_hosts:
                     username = 'root'
                     password = pwd
-                    if hol.isReachable(host, port=443):
+                    if hol.isReachable(host, port=22):
                         lsf.ssh(f'esxcli system settings advanced set -o /Mem/AllocGuestLargePage -i 1', f'{username}@{host}', pwd)
                         lsf.write_output(f"{lsf.ssh(f'esxcli system settings advanced list -o /Mem/AllocGuestLargePage', f'{username}@{host}', pwd)}")
                     else:
