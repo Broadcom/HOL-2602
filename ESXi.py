@@ -1,4 +1,4 @@
- ESXi.py version 1.12 12-May 2025
+# ESXi.py version 1.12 12-May 2025
 import datetime
 import os
 import sys
