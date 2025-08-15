@@ -66,7 +66,8 @@ if lsf.LMC:
         lsf.write_output(f"TASK: Setting Advanced Host settings", logfile=lsf.logfile)
         try:
             if len(esx_hosts) > 0:
-                for host in esx_hosts:
+                for entry in esx_hosts:
+                    (host, mm) = entry.split(':')
                     username = 'root'
                     password = pwd
                     if hol.isReachable(host, port=22):
