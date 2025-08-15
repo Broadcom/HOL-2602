@@ -240,7 +240,7 @@ if not lsf.labcheck:
 #  26xx - Copy LabFiles from vPod Repo
 ########################################################
 
-src="/vpodrepo/2026-labs/2601/labfiles"
+src="/vpodrepo/2026-labs/2602/labfiles"
 dst="/home/holuser/"
 pwd = lsf.password
 
