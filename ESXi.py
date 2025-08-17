@@ -66,12 +66,13 @@ if lsf.LMC:
         lsf.write_output(f"TASK: Setting Advanced Host settings", logfile=lsf.logfile)
         try:
             if len(esx_hosts) > 0:
-                for host in esx_hosts:
+                for entry in esx_hosts:
+                    (host, mm) = entry.split(':')
                     username = 'root'
                     password = pwd
                     if hol.isReachable(host, port=22):
+                        lsf.write_output(f"INFO: Setting /Mem/AllocGuestLargePage = 1 on '{host}'", logfile=lsf.logfile)
                         lsf.ssh(f'esxcli system settings advanced set -o /Mem/AllocGuestLargePage -i 1', f'{username}@{host}', pwd)
-                        lsf.write_output(f"{lsf.ssh(f'esxcli system settings advanced list -o /Mem/AllocGuestLargePage', f'{username}@{host}', pwd)}")
                     else:
                         lsf.write_output(f"INFO: {host} not reachable...", logfile=lsf.logfile)
         except Exception as e:
