@@ -1,0 +1,23 @@
+#cloud-config
+
+users:
+  - default
+  - name: youruser
+    gecos: Your Name
+    groups: wheel, sudo
+    shell: /bin/bash
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    ssh_authorized_keys:
+      - ssh-rsa AAAA...your_key_here
+
+groups:
+  - wheel
+
+write_files:
+  - path: /etc/sudoers.d/90-wheel-nopasswd
+    content: |
+      %wheel ALL=(ALL) NOPASSWD: ALL
+    permissions: '0440'
+
+runcmd:
+  - echo "✅ wheel group with NOPASSWD sudo enabled"
