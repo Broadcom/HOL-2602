@@ -4,6 +4,7 @@ $rpNames        = @("Production", "Development", "Staging")
 $parentResourcePool = $null
 $tags  = @("cloud:vcf","enabled:yes")
 $additionalTags = @("Production:location:las","Development:location:lon","Staging:location:tko", "Production:environment:prd","Development:environment:dev","Staging:environment:stg")
+$password = Get-Content "/home/holuser/Desktop/PASSWORD.txt" -TotalCount 1
 # ------------------------
 
 try {
@@ -21,7 +22,7 @@ try {
 
 # Connect to vCenter
 try {
-    $si = Connect-VIServer -Server vc-wld01-a.site-a.vcf.lab -User administrator@wld.sso -Password 'VMware123!VMware123!' -ErrorAction Stop
+    $si = Connect-VIServer -Server vc-wld01-a.site-a.vcf.lab -User administrator@wld.sso -Password $password -ErrorAction Stop
     Write-Host "Connected to vCenter: $($si.Name)" -ForegroundColor Green
 } catch {
     Write-Error "Failed to connect to vCenter: $($_.Exception.Message)"
